@@ -9,25 +9,29 @@
 /* Begin PBXBuildFile section */
 		083C74842BE593BC00340EC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C74832BE593BC00340EC4 /* AppDelegate.swift */; };
 		083C74862BE593BC00340EC4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C74852BE593BC00340EC4 /* SceneDelegate.swift */; };
-		083C74882BE593BC00340EC4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C74872BE593BC00340EC4 /* ViewController.swift */; };
+		083C74882BE593BC00340EC4 /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C74872BE593BC00340EC4 /* HomeScreenView.swift */; };
 		083C748D2BE593BD00340EC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 083C748C2BE593BD00340EC4 /* Assets.xcassets */; };
 		083C74902BE593BD00340EC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 083C748E2BE593BD00340EC4 /* LaunchScreen.storyboard */; };
 		083C74992BE6B58A00340EC4 /* CoinData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C74982BE6B58A00340EC4 /* CoinData.swift */; };
 		083C749C2BE6C09200340EC4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C749B2BE6C09200340EC4 /* NetworkManager.swift */; };
 		083C749F2BE7BE2900340EC4 /* CoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C749E2BE7BE2900340EC4 /* CoinService.swift */; };
+		083C74A12BE7D89700340EC4 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C74A02BE7D89700340EC4 /* HomeViewModel.swift */; };
+		083C74A32BE7E5FF00340EC4 /* CoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C74A22BE7E5FF00340EC4 /* CoinCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		083C74802BE593BC00340EC4 /* CryptoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		083C74832BE593BC00340EC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		083C74852BE593BC00340EC4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		083C74872BE593BC00340EC4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		083C74872BE593BC00340EC4 /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
 		083C748C2BE593BD00340EC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		083C748F2BE593BD00340EC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		083C74912BE593BD00340EC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		083C74982BE6B58A00340EC4 /* CoinData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinData.swift; sourceTree = "<group>"; };
 		083C749B2BE6C09200340EC4 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		083C749E2BE7BE2900340EC4 /* CoinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinService.swift; sourceTree = "<group>"; };
+		083C74A02BE7D89700340EC4 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		083C74A22BE7E5FF00340EC4 /* CoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +69,9 @@
 				083C74972BE6B53D00340EC4 /* Model */,
 				083C74832BE593BC00340EC4 /* AppDelegate.swift */,
 				083C74852BE593BC00340EC4 /* SceneDelegate.swift */,
-				083C74872BE593BC00340EC4 /* ViewController.swift */,
+				083C74872BE593BC00340EC4 /* HomeScreenView.swift */,
+				083C74A02BE7D89700340EC4 /* HomeViewModel.swift */,
+				083C74A22BE7E5FF00340EC4 /* CoinCell.swift */,
 				083C748C2BE593BD00340EC4 /* Assets.xcassets */,
 				083C748E2BE593BD00340EC4 /* LaunchScreen.storyboard */,
 				083C74912BE593BD00340EC4 /* Info.plist */,
@@ -167,8 +173,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				083C74882BE593BC00340EC4 /* ViewController.swift in Sources */,
+				083C74882BE593BC00340EC4 /* HomeScreenView.swift in Sources */,
 				083C74842BE593BC00340EC4 /* AppDelegate.swift in Sources */,
+				083C74A32BE7E5FF00340EC4 /* CoinCell.swift in Sources */,
+				083C74A12BE7D89700340EC4 /* HomeViewModel.swift in Sources */,
 				083C749C2BE6C09200340EC4 /* NetworkManager.swift in Sources */,
 				083C74992BE6B58A00340EC4 /* CoinData.swift in Sources */,
 				083C749F2BE7BE2900340EC4 /* CoinService.swift in Sources */,
