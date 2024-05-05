@@ -9,7 +9,7 @@ import UIKit
 
 protocol HomeScreenViewProtocol: AnyObject {
     
-    func configureTableView()
+    func configureCollectionView()
 }
 
 final class HomeScreenView: UIViewController {
@@ -27,13 +27,13 @@ final class HomeScreenView: UIViewController {
 }
 
 extension HomeScreenView: HomeScreenViewProtocol {
-    func configureTableView() {
+    func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout:  createFlowLayout())
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(CoinCell.self, forCellWithReuseIdentifier: CoinCell.reuseIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
+        collectionView.showsVerticalScrollIndicator = false
         view.addSubview(collectionView)
         
         NSLayoutConstraint.activate([
