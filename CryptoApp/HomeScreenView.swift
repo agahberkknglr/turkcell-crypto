@@ -16,7 +16,7 @@ final class HomeScreenView: UIViewController {
     
     private let viewModel = HomeViewModel()
     
-    private var tableView: UITableView!
+    private var collectionView: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,33 +28,45 @@ final class HomeScreenView: UIViewController {
 
 extension HomeScreenView: HomeScreenViewProtocol {
     func configureTableView() {
-        tableView = UITableView(frame: view.bounds, style: .plain)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        view.addSubview(tableView)
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout:  createFlowLayout())
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(CoinCell.self, forCellWithReuseIdentifier: CoinCell.reuseIdentifier)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(collectionView)
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        
-        tableView.backgroundColor = .systemPink
+        collectionView.backgroundColor = .systemOrange
+    }
+    
+    func createFlowLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        let itemWidth = CGFloat.deviceWidth - 40
+        //let padding: CGFloat = 50
+        layout.scrollDirection = .vertical
+        //layout.sectionInset = UIEdgeInsets(top: 32, left: padding, bottom: 32, right: padding)
+        layout.itemSize = CGSize(width: itemWidth, height: (itemWidth + 40) / 4)
+        layout.minimumLineSpacing = 15
+        return layout
     }
 }
 
-extension HomeScreenView: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+extension HomeScreenView: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        20
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "deneme"
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CoinCell.reuseIdentifier, for: indexPath)
         return cell
     }
+    
     
     
 }
