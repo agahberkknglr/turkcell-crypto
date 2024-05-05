@@ -8,21 +8,20 @@
 import Foundation
 
 struct CoinData: Decodable {
-    let status: String
-    let data: Data
+    let data: DataClass?
 }
 
-struct Data: Decodable {
-    let coins: [Coins]
+struct DataClass: Decodable {
+    let coins: [Coins]?
 }
 
 struct Coins: Decodable {
-    let symbol, name, color, iconUrl, marketCap, price, change, coinrankingUrl, volume24h, btcPrice: String?
+    let uuid, symbol, name, color, iconUrl, marketCap, price, change, coinrankingUrl, volume24h, btcPrice: String?
     let listedAt, tier, rank: Int?
     let lowVolume: Bool?
     
     enum CodingKeys: String, CodingKey {
-        case symbol, name, color, iconUrl, marketCap, price, change, coinrankingUrl, btcPrice
+        case uuid, symbol, name, color, iconUrl, marketCap, price, change, coinrankingUrl, btcPrice
         case volume24h = "24hVolume"
         case listedAt, tier, rank
         case lowVolume
