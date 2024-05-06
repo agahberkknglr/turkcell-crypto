@@ -10,6 +10,7 @@ import UIKit
 protocol HomeScreenViewProtocol: AnyObject {
     
     func configureCollectionView()
+    func reloadCollectionView()
 }
 
 final class HomeScreenView: UIViewController {
@@ -36,34 +37,32 @@ extension HomeScreenView: HomeScreenViewProtocol {
         collectionView.showsVerticalScrollIndicator = false
         view.addSubview(collectionView)
         
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        collectionView.backgroundColor = .systemOrange
+        collectionView.pin(view: view)
+        collectionView.backgroundColor = UIColor(hex: "#F9F9F9")
     }
     
     func createFlowLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         let itemWidth = CGFloat.deviceWidth - 40
-        //let padding: CGFloat = 50
         layout.scrollDirection = .vertical
-        //layout.sectionInset = UIEdgeInsets(top: 32, left: padding, bottom: 32, right: padding)
         layout.itemSize = CGSize(width: itemWidth, height: (itemWidth + 40) / 4)
         layout.minimumLineSpacing = 15
         return layout
+    }
+    
+    func reloadCollectionView() {
+        collectionView.reloadData()
     }
 }
 
 extension HomeScreenView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        20
+        viewModel.coins.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CoinCell.reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CoinCell.reuseIdentifier, for: indexPath) as! CoinCell
+        cell.setCell(coin: viewModel.coins[indexPath.item])
         return cell
     }
     

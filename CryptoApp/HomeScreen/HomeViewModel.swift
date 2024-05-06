@@ -25,7 +25,6 @@ extension HomeViewModel: HomeViewModelProtocol {
     func viewDidLoad() {
         view?.configureCollectionView()
         getCoins()
-        
     }
     
     func getCoins() {
@@ -33,6 +32,9 @@ extension HomeViewModel: HomeViewModelProtocol {
             guard let self = self else { return }
             guard let returnedCoins = returnedCoins else { return }
             self.coins.append(contentsOf: returnedCoins)
+            DispatchQueue.main.async {
+                self.view?.reloadCollectionView()
+            }
         }
     }
 }
