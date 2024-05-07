@@ -11,6 +11,7 @@ import SDWebImage
 class CoinCell: UICollectionViewCell {
     static let reuseIdentifier = "coinCell"
     
+    var view = UIView()
     var iconImageView = UIImageView()
     var coinNameLabel = UILabel()
     var coinSymbolLabel = UILabel()
@@ -18,6 +19,7 @@ class CoinCell: UICollectionViewCell {
     var coinChangeLabel = UILabel()
     var infoStackView = UIStackView()
     var priceStackView = UIStackView()
+    var cellStackView = UIStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,13 +67,14 @@ class CoinCell: UICollectionViewCell {
     private func setupViews() {
         backgroundColor = UIColor(hex: "#FFFFFF")
         layer.cornerRadius = 16
-        addSubview(iconImageView)
-        addSubview(infoStackView)
-        addSubview(priceStackView)
+        contentView.addSubview(view)
+        view.addSubview(iconImageView)
+        view.addSubview(cellStackView)
         
         configureIconImageView()
         configureStacks()
         configureLabels()
+        setViewConstraints()
         setImageConstraints()
         setStacksConstraints()
     }
@@ -82,60 +85,100 @@ class CoinCell: UICollectionViewCell {
         
     }
     
+    private func labelConfigurater(label: UILabel, color: UIColor, fontSize: CGFloat, fontWeight: UIFont.Weight, textAlignment: NSTextAlignment) {
+        label.numberOfLines = 1
+        label.textColor = color
+        label.font = UIFont.systemFont(ofSize: fontSize, weight: fontWeight)
+        label.textAlignment = textAlignment
+    }
+    
     private func configureLabels() {
-        coinNameLabel.numberOfLines = 0
-        coinNameLabel.textColor = UIColor(hex: "#0C235E")
-        coinNameLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        coinSymbolLabel.numberOfLines = 0
-        coinSymbolLabel.textColor = UIColor(hex: "#A9B2C6")
-        coinSymbolLabel.font = UIFont.systemFont(ofSize: 13)
-        coinPriceLabel.numberOfLines = 0
-        coinPriceLabel.textColor = UIColor(hex: "#0C235E")
-        coinPriceLabel.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        coinChangeLabel.numberOfLines = 0
-        coinChangeLabel.font = UIFont.systemFont(ofSize: 13)
+        labelConfigurater(label: coinNameLabel,
+                          color: UIColor(hex: "#0C235E"),
+                          fontSize: 17,
+                          fontWeight: .semibold,
+                          textAlignment: .left)
+        
+        labelConfigurater(label: coinSymbolLabel,
+                          color: UIColor(hex: "#A9B2C6"),
+                          fontSize: 13,
+                          fontWeight: .light,
+                          textAlignment: .left)
+        
+        labelConfigurater(label: coinPriceLabel,
+                          color: UIColor(hex: "#0C235E"),
+                          fontSize: 17,
+                          fontWeight: .semibold,
+                          textAlignment: .right)
+        
+        labelConfigurater(label: coinChangeLabel,
+                          color: .gray,
+                          fontSize: 13,
+                          fontWeight: .light,
+                          textAlignment: .right)
     }
     
     private func configureStacks() {
         infoStackView.axis = .vertical
-        infoStackView.spacing = 4
+        infoStackView.spacing = -32
         infoStackView.addArrangedSubview(coinSymbolLabel)
         infoStackView.addArrangedSubview(coinNameLabel)
+        infoStackView.distribution = .fillEqually
         
         priceStackView.axis = .vertical
-        priceStackView.spacing = 4
+        priceStackView.spacing = -32
         priceStackView.addArrangedSubview(coinPriceLabel)
         priceStackView.addArrangedSubview(coinChangeLabel)
+        priceStackView.distribution = .fillEqually
+        
+        cellStackView.axis = .horizontal
+        cellStackView.spacing = 4
+        cellStackView.addArrangedSubview(infoStackView)
+        cellStackView.addArrangedSubview(priceStackView)
+        cellStackView.distribution = .fillEqually
+        
+    }
+    
+    private func setViewConstraints() {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.pin(view: contentView)
         
     }
     
     private func setImageConstraints() {
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            iconImageView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 20),
-            iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            iconImageView.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 20),
+            iconImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             iconImageView.widthAnchor.constraint(equalToConstant: 40),
             iconImageView.heightAnchor.constraint(equalToConstant: 40),
-            iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            iconImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -20),
+            iconImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            iconImageView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -20),
         ])
     }
     
     private func setStacksConstraints() {
+        cellStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            cellStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            cellStackView.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 16),
+            cellStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            cellStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -4)
+        ])
         infoStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            infoStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 32),
-            infoStackView.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 20),
-            infoStackView.trailingAnchor.constraint(equalTo: priceStackView.leadingAnchor, constant: -20),
-            infoStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32),
+            infoStackView.topAnchor.constraint(equalTo: cellStackView.topAnchor, constant: 4),
+            infoStackView.leadingAnchor.constraint(equalTo: cellStackView.leadingAnchor, constant: 8),
+            infoStackView.trailingAnchor.constraint(equalTo: priceStackView.leadingAnchor, constant: -16),
+            infoStackView.bottomAnchor.constraint(equalTo: cellStackView.bottomAnchor, constant: -8),
         ])
         priceStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            priceStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 32),
-            priceStackView.leadingAnchor.constraint(equalTo: infoStackView.trailingAnchor, constant: 16),
-            priceStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            priceStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -32)
+            priceStackView.topAnchor.constraint(equalTo: cellStackView.topAnchor, constant: 8),
+            priceStackView.leadingAnchor.constraint(equalTo: infoStackView.trailingAnchor, constant: 8),
+            priceStackView.trailingAnchor.constraint(equalTo: cellStackView.trailingAnchor,constant: -16),
+            priceStackView.bottomAnchor.constraint(equalTo: cellStackView.bottomAnchor, constant: -8)
         ])
+        
     }
-
 }
