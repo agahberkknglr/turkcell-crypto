@@ -8,9 +8,10 @@
 import UIKit
 
 protocol HomeScreenViewProtocol: AnyObject {
-    
+    func configureHomeVC()
     func configureCollectionView()
     func reloadCollectionView()
+    func navigateToDetailScreen(with coin: Coins)
 }
 
 final class HomeScreenView: UIViewController {
@@ -28,6 +29,11 @@ final class HomeScreenView: UIViewController {
 }
 
 extension HomeScreenView: HomeScreenViewProtocol {
+    
+    func configureHomeVC() {
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout:  createFlowLayout())
         collectionView.delegate = self
@@ -53,6 +59,13 @@ extension HomeScreenView: HomeScreenViewProtocol {
     func reloadCollectionView() {
         collectionView.reloadData()
     }
+    
+    func navigateToDetailScreen(with coin: Coins) {
+        let detailViewModel = DetailViewModel()
+        detailViewModel.coin = coin
+        let detailViewController = DetailScreenView(viewModel: detailViewModel)
+        navigationController?.pushViewController(detailViewController, animated: true)
+    }
 }
 
 extension HomeScreenView: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -66,6 +79,8 @@ extension HomeScreenView: UICollectionViewDelegate, UICollectionViewDataSource {
         return cell
     }
     
-    
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedCoin = viewModel.coins[indexPath.item]
+        navigateToDetailScreen(with: selectedCoin)
+    }
 }

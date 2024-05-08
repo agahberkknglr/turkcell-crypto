@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-class CoinCell: UICollectionViewCell {
+final class CoinCell: UICollectionViewCell {
     static let reuseIdentifier = "coinCell"
     
     var view = UIView()
