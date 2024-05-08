@@ -100,9 +100,9 @@ final class CoinCell: UICollectionViewCell {
                           textAlignment: .left)
         
         labelConfigurater(label: coinSymbolLabel,
-                          color: UIColor(hex: "#A9B2C6"),
-                          fontSize: 13,
-                          fontWeight: .light,
+                          color: UIColor(hex: "#79808E"),
+                          fontSize: 14,
+                          fontWeight: .medium,
                           textAlignment: .left)
         
         labelConfigurater(label: coinPriceLabel,

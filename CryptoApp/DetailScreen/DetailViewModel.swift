@@ -12,7 +12,7 @@ protocol DetailViewModelProtocol {
     func viewDidLoad()
 }
 
-class DetailViewModel {
+final class DetailViewModel {
     weak var view: DetailScreenViewProtocol?
     var coin: Coins?
 }
@@ -20,6 +20,6 @@ class DetailViewModel {
 extension DetailViewModel: DetailViewModelProtocol {
     func viewDidLoad() {
         view?.configureDetailVC()
-        print(coin)
+        view?.setupNavigationBar()
     }
 }

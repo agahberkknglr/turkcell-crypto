@@ -12,6 +12,7 @@ protocol HomeViewModelProtocol {
     
     func viewDidLoad()
     func getCoins()
+    func viewWillAppear()
     
 }
 
@@ -26,6 +27,9 @@ extension HomeViewModel: HomeViewModelProtocol {
     func viewDidLoad() {
         view?.configureCollectionView()
         getCoins()
+    }
+    
+    func viewWillAppear() {
         view?.configureHomeVC()
     }
     
