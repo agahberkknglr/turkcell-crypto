@@ -25,12 +25,13 @@ final class HomeViewModel {
 extension HomeViewModel: HomeViewModelProtocol {
     
     func viewDidLoad() {
-        view?.configureCollectionView()
         getCoins()
     }
     
     func viewWillAppear() {
         view?.configureHomeVC()
+        view?.configureHomeTitle()
+        view?.configureCollectionView()
     }
     
     func getCoins() {

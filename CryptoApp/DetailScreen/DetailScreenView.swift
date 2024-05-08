@@ -137,7 +137,7 @@ extension DetailScreenView: DetailScreenViewProtocol {
     private func setLabels() {
         labelConfigurater(label: coinTitleLabel,
                           color: UIColor(hex: "#0C235E"),
-                          fontSize: 12,
+                          fontSize: 13,
                           fontWeight: .semibold,
                           textAlignment: .left,
                           text: "CURRENT PRICE")
