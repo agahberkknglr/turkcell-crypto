@@ -52,12 +52,8 @@ final class CoinCell: UICollectionViewCell {
             }
         }
         if let changeString = coin.change, let change = Double(changeString) {
-            if change < 0 {
-                coinChangeLabel.textColor = .red
-            } else {
-                coinChangeLabel.textColor = .green
-            }
-            let formattedChange = String(format: "%.2f", change)
+            coinChangeLabel.textColor = change < 0 ? .systemRed : .systemGreen
+            let formattedChange = String(format: "$%.2f", change)
             coinChangeLabel.text = formattedChange
         }
         
@@ -101,8 +97,8 @@ final class CoinCell: UICollectionViewCell {
         
         labelConfigurater(label: coinSymbolLabel,
                           color: UIColor(hex: "#79808E"),
-                          fontSize: 14,
-                          fontWeight: .medium,
+                          fontSize: 13,
+                          fontWeight: .light,
                           textAlignment: .left)
         
         labelConfigurater(label: coinPriceLabel,
@@ -113,8 +109,8 @@ final class CoinCell: UICollectionViewCell {
         
         labelConfigurater(label: coinChangeLabel,
                           color: .gray,
-                          fontSize: 13,
-                          fontWeight: .light,
+                          fontSize: 14,
+                          fontWeight: .regular,
                           textAlignment: .right)
     }
     
