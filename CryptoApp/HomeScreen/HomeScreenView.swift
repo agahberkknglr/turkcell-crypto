@@ -62,7 +62,8 @@ extension HomeScreenView: HomeScreenViewProtocol {
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             homeSortButton.leadingAnchor.constraint(equalTo: homeTitleLabel.trailingAnchor, constant: 16),
-            homeSortButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -16)
+            homeSortButton.centerYAnchor.constraint(equalTo: homeTitleLabel.centerYAnchor),
+            homeSortButton.widthAnchor.constraint(equalToConstant: 130)
             
         ])
     }
@@ -76,7 +77,7 @@ extension HomeScreenView: HomeScreenViewProtocol {
     }
     
     private func setSortButton() {
-        homeSortButton.setTitle("Ranking", for: .normal)
+        updateSortButtonText()
         homeSortButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         homeSortButton.setTitleColor(UIColor(hex: "#6A61F2"), for: .normal)
         homeSortButton.backgroundColor = UIColor(hex: "#E8E7FF")
@@ -88,7 +89,27 @@ extension HomeScreenView: HomeScreenViewProtocol {
     }
     
     @objc private func sortButtonClicked() {
-
+        viewModel.cycleSortingCriteria()
+        updateSortButtonText()
+        viewModel.sortCoins()
+        reloadCollectionView()
+    }
+    
+    private func updateSortButtonText() {
+        switch viewModel.sortingCriteria {
+        case .rank:
+            homeSortButton.setTitle("Ranking ▼", for: .normal)
+        case .price:
+            homeSortButton.setTitle("Price ▲", for: .normal)
+        case .listedAt:
+            homeSortButton.setTitle("Listed At ▲", for: .normal)
+        case .change:
+            homeSortButton.setTitle("Change ▲", for: .normal)
+        case .volume24h:
+            homeSortButton.setTitle("24h Volume ▲", for: .normal)
+        case .marketCap:
+            homeSortButton.setTitle("Market Cap ▲", for: .normal)
+        }
     }
     
     

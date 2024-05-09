@@ -11,15 +11,15 @@ import SDWebImage
 final class CoinCell: UICollectionViewCell {
     static let reuseIdentifier = "coinCell"
     
-    var view = UIView()
-    var iconImageView = UIImageView()
-    var coinNameLabel = UILabel()
-    var coinSymbolLabel = UILabel()
-    var coinPriceLabel = UILabel()
-    var coinChangeLabel = UILabel()
-    var infoStackView = UIStackView()
-    var priceStackView = UIStackView()
-    var cellStackView = UIStackView()
+    private var view = UIView()
+    private var iconImageView = UIImageView()
+    private var coinNameLabel = UILabel()
+    private var coinSymbolLabel = UILabel()
+    private var coinPriceLabel = UILabel()
+    private var coinChangeLabel = UILabel()
+    private var infoStackView = UIStackView()
+    private var priceStackView = UIStackView()
+    private var cellStackView = UIStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -114,25 +114,18 @@ final class CoinCell: UICollectionViewCell {
                           textAlignment: .right)
     }
     
+    private func stacksConfigurater(stack: UIStackView, axis: NSLayoutConstraint.Axis, spacing: CGFloat, view1: UIView, view2: UIView, distribution: UIStackView.Distribution ) {
+        stack.axis = axis
+        stack.spacing = spacing
+        stack.addArrangedSubview(view1)
+        stack.addArrangedSubview(view2)
+        stack.distribution = distribution
+    }
+    
     private func configureStacks() {
-        infoStackView.axis = .vertical
-        infoStackView.spacing = -32
-        infoStackView.addArrangedSubview(coinSymbolLabel)
-        infoStackView.addArrangedSubview(coinNameLabel)
-        infoStackView.distribution = .fillEqually
-        
-        priceStackView.axis = .vertical
-        priceStackView.spacing = -32
-        priceStackView.addArrangedSubview(coinPriceLabel)
-        priceStackView.addArrangedSubview(coinChangeLabel)
-        priceStackView.distribution = .fillEqually
-        
-        cellStackView.axis = .horizontal
-        cellStackView.spacing = 4
-        cellStackView.addArrangedSubview(infoStackView)
-        cellStackView.addArrangedSubview(priceStackView)
-        cellStackView.distribution = .fillEqually
-        
+        stacksConfigurater(stack: infoStackView, axis: .vertical, spacing: -32, view1: coinSymbolLabel, view2: coinNameLabel, distribution: .fillEqually)
+        stacksConfigurater(stack: priceStackView, axis: .vertical, spacing: -32, view1: coinPriceLabel, view2: coinChangeLabel, distribution: .fillEqually)
+        stacksConfigurater(stack: cellStackView, axis: .horizontal, spacing: 4, view1: infoStackView, view2: priceStackView, distribution: .fillEqually)
     }
     
     private func setViewConstraints() {

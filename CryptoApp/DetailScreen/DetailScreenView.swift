@@ -24,15 +24,15 @@ final class DetailScreenView: UIViewController {
     }
     
     private let viewModel: DetailViewModel
-    let coinTitleLabel = UILabel()
-    let coinPriceLabel = UILabel()
-    let coinChangeLabel = UILabel()
-    let coinHighLabel = UILabel()
-    let coinLowLabel = UILabel()
-    var isHigh = false
-    let priceStackView = UIStackView()
-    let highLowStackView = UIStackView()
-    let infoStackView = UIStackView()
+    private let coinTitleLabel = UILabel()
+    private let coinPriceLabel = UILabel()
+    private let coinChangeLabel = UILabel()
+    private let coinHighLabel = UILabel()
+    private let coinLowLabel = UILabel()
+    private var isHigh = false
+    private let priceStackView = UIStackView()
+    private let highLowStackView = UIStackView()
+    private let infoStackView = UIStackView()
     
     
     override func viewDidLoad() {
@@ -97,8 +97,8 @@ extension DetailScreenView: DetailScreenViewProtocol {
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            stackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            stackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             coinSymbolLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
             coinNameLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
@@ -120,16 +120,16 @@ extension DetailScreenView: DetailScreenViewProtocol {
         coinTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             coinTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
-            coinTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            coinTitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            coinTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            coinTitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             coinTitleLabel.bottomAnchor.constraint(equalTo: infoStackView.topAnchor, constant: -8)
         ])
         
         infoStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             infoStackView.topAnchor.constraint(equalTo: coinTitleLabel.bottomAnchor, constant: 8),
-            infoStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            infoStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8)
+            infoStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            infoStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
 
     }
