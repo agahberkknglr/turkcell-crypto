@@ -80,38 +80,80 @@ extension HomeScreenView: HomeScreenViewProtocol {
     
     private func setSortButton() {
         updateSortButtonText()
-        homeSortButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        homeSortButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         homeSortButton.setTitleColor(UIColor(hex: "#6A61F2"), for: .normal)
         homeSortButton.backgroundColor = UIColor(hex: "#E8E7FF")
         homeSortButton.layer.cornerRadius = 16
         homeSortButton.translatesAutoresizingMaskIntoConstraints = false
-        
         homeSortButton.addTarget(self, action: #selector(sortButtonClicked), for: .touchUpInside)
-        
+        homeSortButton.menu = sortButtonMenu()
     }
     
-    @objc private func sortButtonClicked() {
-        viewModel.cycleSortingCriteria()
+    func sortButtonMenu() -> UIMenu {
+        let menuItems = UIMenu(title: "Sort the Crypto Coins", options: .displayInline, children: [
+            
+            UIAction(title: "Ranking", handler: { [weak self] (_) in
+                self?.viewModel.sortingCriteria = .rank
+                self?.sortButtonMenuItemClicked()
+            }),
+            UIAction(title: "Price", handler: { [weak self](_) in
+                self?.viewModel.sortingCriteria = .price
+                self?.sortButtonMenuItemClicked()
+            }),
+            UIAction(title: "Listed At", handler: { [weak self] (_) in
+                self?.viewModel.sortingCriteria = .listedAt
+                self?.sortButtonMenuItemClicked()
+            }),
+            UIAction(title: "Change", handler: { [weak self](_) in
+                self?.viewModel.sortingCriteria = .change
+                self?.sortButtonMenuItemClicked()
+            }),
+            UIAction(title: "24h Volume", handler: { [weak self] (_) in
+                self?.viewModel.sortingCriteria = .volume24h
+                self?.sortButtonMenuItemClicked()
+            }),
+            UIAction(title: "MarketCap", handler: { [weak self] (_) in
+                self?.viewModel.sortingCriteria = .marketCap
+                self?.sortButtonMenuItemClicked()
+            }),
+        ])
+        return menuItems
+    }
+    
+    @objc private func sortButtonMenuItemClicked() {
         updateSortButtonText()
         viewModel.sortCoins()
         reloadCollectionView()
     }
     
+    @objc private func sortButtonClicked() {
+        viewModel.toggleSortingOrder()
+        updateSortButtonText()
+        viewModel.sortCoins()
+        reloadCollectionView()
+    }
+
+    
     private func updateSortButtonText() {
+        var sortTitle: String = ""
+        var sortSymbol: String = ""
+        
         switch viewModel.sortingCriteria {
         case .rank:
-            homeSortButton.setTitle("Ranking ▼", for: .normal)
+            sortTitle = "Ranking"
         case .price:
-            homeSortButton.setTitle("Price ▲", for: .normal)
+            sortTitle = "Price"
         case .listedAt:
-            homeSortButton.setTitle("Listed At ▲", for: .normal)
+            sortTitle = "Listed At"
         case .change:
-            homeSortButton.setTitle("Change ▲", for: .normal)
+            sortTitle = "Change"
         case .volume24h:
-            homeSortButton.setTitle("24h Volume ▲", for: .normal)
+            sortTitle = "24h Vol"
         case .marketCap:
-            homeSortButton.setTitle("Market Cap ▲", for: .normal)
+            sortTitle = "Market Cap"
         }
+        sortSymbol = viewModel.isAscendingOrder ? "▲" : "▼"
+        homeSortButton.setTitle("\(sortTitle) \(sortSymbol)", for: .normal)
     }
     
     //MARK: - Configuration of Collection View
