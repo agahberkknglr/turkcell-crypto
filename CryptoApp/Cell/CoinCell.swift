@@ -11,6 +11,7 @@ import SDWebImage
 final class CoinCell: UICollectionViewCell {
     static let reuseIdentifier = "coinCell"
     
+    //MARK: - Variables
     private var view = UIView()
     private var iconImageView = UIImageView()
     private var coinNameLabel = UILabel()
@@ -21,6 +22,7 @@ final class CoinCell: UICollectionViewCell {
     private var priceStackView = UIStackView()
     private var cellStackView = UIStackView()
     
+    //MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -30,6 +32,7 @@ final class CoinCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Configuration
     func setCell(coin: Coins){
         coinSymbolLabel.text = coin.symbol
         coinNameLabel.text = coin.name
@@ -43,11 +46,7 @@ final class CoinCell: UICollectionViewCell {
             }
         }
         if let priceString = coin.price, let price = Double(priceString) {
-            let numberFormatter = NumberFormatter()
-            numberFormatter.numberStyle = .currency
-            numberFormatter.currencySymbol = "$"
-            numberFormatter.maximumFractionDigits = 2
-            if let formattedPrice = numberFormatter.string(from: NSNumber(value: price)) {
+            if let formattedPrice = NumberFormatter.currencyFormatter.string(from: NSNumber(value: price)) {
                 coinPriceLabel.text = formattedPrice
             }
         }
@@ -56,10 +55,9 @@ final class CoinCell: UICollectionViewCell {
             let formattedChange = String(format: "$%.2f", change)
             coinChangeLabel.text = formattedChange
         }
-        
-        
     }
-    
+   
+    //MARK: - Setup
     private func setupViews() {
         backgroundColor = UIColor(hex: "#FFFFFF")
         layer.cornerRadius = 16
@@ -75,59 +73,27 @@ final class CoinCell: UICollectionViewCell {
         setStacksConstraints()
     }
     
+    //MARK: - Configuration
     private func configureIconImageView() {
         iconImageView.layer.cornerRadius = 8
         iconImageView.clipsToBounds = true
         
     }
     
-    private func labelConfigurater(label: UILabel, color: UIColor, fontSize: CGFloat, fontWeight: UIFont.Weight, textAlignment: NSTextAlignment) {
-        label.numberOfLines = 1
-        label.textColor = color
-        label.font = UIFont.systemFont(ofSize: fontSize, weight: fontWeight)
-        label.textAlignment = textAlignment
-    }
-    
     private func configureLabels() {
-        labelConfigurater(label: coinNameLabel,
-                          color: UIColor(hex: "#0C235E"),
-                          fontSize: 17,
-                          fontWeight: .semibold,
-                          textAlignment: .left)
-        
-        labelConfigurater(label: coinSymbolLabel,
-                          color: UIColor(hex: "#79808E"),
-                          fontSize: 13,
-                          fontWeight: .light,
-                          textAlignment: .left)
-        
-        labelConfigurater(label: coinPriceLabel,
-                          color: UIColor(hex: "#0C235E"),
-                          fontSize: 17,
-                          fontWeight: .semibold,
-                          textAlignment: .right)
-        
-        labelConfigurater(label: coinChangeLabel,
-                          color: .gray,
-                          fontSize: 14,
-                          fontWeight: .regular,
-                          textAlignment: .right)
-    }
-    
-    private func stacksConfigurater(stack: UIStackView, axis: NSLayoutConstraint.Axis, spacing: CGFloat, view1: UIView, view2: UIView, distribution: UIStackView.Distribution ) {
-        stack.axis = axis
-        stack.spacing = spacing
-        stack.addArrangedSubview(view1)
-        stack.addArrangedSubview(view2)
-        stack.distribution = distribution
+        labelConfigurater(label: coinNameLabel, color: UIColor(hex: "#0C235E"), fontSize: 17, fontWeight: .semibold, textAlignment: .left)
+        labelConfigurater(label: coinSymbolLabel, color: UIColor(hex: "#79808E"), fontSize: 13, fontWeight: .light, textAlignment: .left)
+        labelConfigurater(label: coinPriceLabel, color: UIColor(hex: "#0C235E"), fontSize: 17, fontWeight: .semibold, textAlignment: .right)
+        labelConfigurater(label: coinChangeLabel, color: .gray, fontSize: 14, fontWeight: .regular, textAlignment: .right)
     }
     
     private func configureStacks() {
-        stacksConfigurater(stack: infoStackView, axis: .vertical, spacing: -32, view1: coinSymbolLabel, view2: coinNameLabel, distribution: .fillEqually)
-        stacksConfigurater(stack: priceStackView, axis: .vertical, spacing: -32, view1: coinPriceLabel, view2: coinChangeLabel, distribution: .fillEqually)
-        stacksConfigurater(stack: cellStackView, axis: .horizontal, spacing: 4, view1: infoStackView, view2: priceStackView, distribution: .fillEqually)
+        configureStack(stack: infoStackView, axis: .vertical, spacing: -32, views: [coinSymbolLabel,coinNameLabel], distribution: .fillEqually)
+        configureStack(stack: priceStackView, axis: .vertical, spacing: -32, views: [coinPriceLabel,coinChangeLabel], distribution: .fillEqually)
+        configureStack(stack: cellStackView, axis: .horizontal, spacing: 4, views: [infoStackView,priceStackView], distribution: .fillEqually)
     }
     
+    //MARK: - Constraints
     private func setViewConstraints() {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.pin(view: contentView)

@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: - Protocol
 protocol DetailScreenViewProtocol: AnyObject {
     func configureDetailVC()
     func setupNavigationBar()
@@ -14,6 +15,7 @@ protocol DetailScreenViewProtocol: AnyObject {
 
 final class DetailScreenView: UIViewController {
     
+    //MARK: - Initialization
     init(viewModel: DetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -23,6 +25,7 @@ final class DetailScreenView: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Variables
     private let viewModel: DetailViewModel
     private let coinTitleLabel = UILabel()
     private let coinPriceLabel = UILabel()
@@ -34,7 +37,7 @@ final class DetailScreenView: UIViewController {
     private let highLowStackView = UIStackView()
     private let infoStackView = UIStackView()
     
-    
+    //MARK: - LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,48 +47,31 @@ final class DetailScreenView: UIViewController {
 
 }
 
+//MARK: - Extensions
 extension DetailScreenView: DetailScreenViewProtocol {
    
+    //MARK: - Configuration
     func configureDetailVC() {
         view.backgroundColor = UIColor(hex: "#F9F9F9")
         navigationController?.isNavigationBarHidden = false
         setupUI()
     }
     
+    //MARK: - Configuration of Navigation Bar
     func setupNavigationBar() {
         setupNavigationTitle()
         setupNavigationBackButton()
     }
     
-    private func labelConfigurater(label: UILabel, color: UIColor, fontSize: CGFloat, fontWeight: UIFont.Weight, textAlignment: NSTextAlignment, text: String?) {
-        label.numberOfLines = 1
-        label.textColor = color
-        label.font = UIFont.systemFont(ofSize: fontSize, weight: fontWeight)
-        label.textAlignment = textAlignment
-        label.text = text
-    }
-    
     private func setupNavigationTitle() {
         let containerView = UIView()
-        
         let coinSymbolLabel = UILabel()
-        labelConfigurater(label: coinSymbolLabel,
-                          color: UIColor(hex: "#79808E"),
-                          fontSize: 14,
-                          fontWeight: .medium,
-                          textAlignment: .center,
-                          text: viewModel.coin?.symbol)
-        
-        
         let coinNameLabel = UILabel()
-        labelConfigurater(label: coinNameLabel,
-                          color: UIColor(hex: "#0C235E"),
-                          fontSize: 20,
-                          fontWeight: .semibold,
-                          textAlignment: .center,
-                          text: viewModel.coin?.name)
-        
         let stackView = UIStackView(arrangedSubviews: [coinSymbolLabel,coinNameLabel])
+        
+        labelConfigurater(label: coinSymbolLabel, color: UIColor(hex: "#79808E"), fontSize: 14, fontWeight: .medium, textAlignment: .center, text: viewModel.coin?.symbol)
+        labelConfigurater(label: coinNameLabel, color: UIColor(hex: "#0C235E"), fontSize: 20, fontWeight: .semibold, textAlignment: .center, text: viewModel.coin?.name)
+        
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 4
@@ -93,7 +79,6 @@ extension DetailScreenView: DetailScreenViewProtocol {
         containerView.addSubview(stackView)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
@@ -102,7 +87,6 @@ extension DetailScreenView: DetailScreenViewProtocol {
             coinSymbolLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
             coinNameLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
-        
         navigationItem.titleView = containerView
     }
     
@@ -111,6 +95,7 @@ extension DetailScreenView: DetailScreenViewProtocol {
         navigationController?.navigationBar.tintColor = UIColor(hex: "#0C235E")
     }
     
+    //MARK: - Configuration of UI
     private func setupUI() {
         setLabels()
         setStackViews()
@@ -135,110 +120,51 @@ extension DetailScreenView: DetailScreenViewProtocol {
     }
     
     private func setLabels() {
-        labelConfigurater(label: coinTitleLabel,
-                          color: UIColor(hex: "#0C235E"),
-                          fontSize: 13,
-                          fontWeight: .semibold,
-                          textAlignment: .left,
-                          text: "CURRENT PRICE")
+        labelConfigurater(label: coinTitleLabel, color: UIColor(hex: "#0C235E"), fontSize: 13, fontWeight: .semibold, textAlignment: .left, text: "CURRENT PRICE")
         if let priceString = viewModel.coin?.price, let price = Double(priceString) {
-            let numberFormatter = NumberFormatter()
-            numberFormatter.numberStyle = .currency
-            numberFormatter.currencySymbol = "$"
-            numberFormatter.maximumFractionDigits = 2
-            if let formattedPrice = numberFormatter.string(from: NSNumber(value: price)) {
-                labelConfigurater(label: coinPriceLabel,
-                                  color: UIColor(hex: "#0C235E"),
-                                  fontSize: 27,
-                                  fontWeight: .semibold,
-                                  textAlignment: .left,
-                                  text: formattedPrice)
+            if let formattedPrice = NumberFormatter.currencyFormatter.string(from: NSNumber(value: price)) {
+                labelConfigurater(label: coinPriceLabel, color: UIColor(hex: "#0C235E"), fontSize: 27, fontWeight: .semibold, textAlignment: .left, text: formattedPrice)
             }
         }
         if let changeString = viewModel.coin?.change, let change = Double(changeString) {
             isHigh = change < 0 ? false : true
-            let numberFormatter = NumberFormatter()
-            numberFormatter.numberStyle = .currency
-            numberFormatter.currencySymbol = "$"
-            numberFormatter.maximumFractionDigits = 2
-            if let formattedChange = numberFormatter.string(from: NSNumber(value: change)) {
+            if let formattedChange = NumberFormatter.currencyFormatter.string(from: NSNumber(value: change)) {
                 if let priceString = viewModel.coin?.price, let price = Double(priceString) {
                     let percentageChange = (change / price) * 100
                     let formattedPercentageChange = String(format: "%.2f%%", percentageChange)
-                    labelConfigurater(label: coinChangeLabel,
-                                      color: change < 0 ? .systemRed : .systemGreen,
-                                      fontSize: 17,
-                                      fontWeight: .medium,
-                                      textAlignment: .left,
-                                      text: "\(formattedPercentageChange) (\(formattedChange))")
+                    labelConfigurater(label: coinChangeLabel, color: change < 0 ? .systemRed : .systemGreen, fontSize: 17, fontWeight: .medium, textAlignment: .left, text: "\(formattedPercentageChange) (\(formattedChange))")
                 }
             }
-            
         }
         if let highString = isHigh ? viewModel.coin?.sparkline?.last : viewModel.coin?.sparkline?.first, let high = Double(highString) {
-            let numberFormatter = NumberFormatter()
-            numberFormatter.numberStyle = .currency
-            numberFormatter.currencySymbol = ""
-            numberFormatter.maximumFractionDigits = 2
-            if let formattedHigh = numberFormatter.string(from: NSNumber(value: high)) {
+            if let formattedHigh = NumberFormatter.currencyFormatter.string(from: NSNumber(value: high)) {
                 let attributedString = NSMutableAttributedString(string: "High: ", attributes: [
                         .foregroundColor: UIColor(hex: "#0C235E")
                     ])
                     attributedString.append(NSAttributedString(string: formattedHigh, attributes: [
                         .foregroundColor: UIColor.systemGreen
                     ]))
-                labelConfigurater(label: coinHighLabel,
-                                  color: .systemGreen,
-                                  fontSize: 17,
-                                  fontWeight: .medium,
-                                  textAlignment: .right,
-                                  text: "")
+                labelConfigurater(label: coinHighLabel, color: .systemGreen, fontSize: 17, fontWeight: .medium, textAlignment: .right)
                 coinHighLabel.attributedText = attributedString
             }
         }
         if let lowString = isHigh ? viewModel.coin?.sparkline?.first : viewModel.coin?.sparkline?.last, let low = Double(lowString) {
-            let numberFormatter = NumberFormatter()
-            numberFormatter.numberStyle = .currency
-            numberFormatter.currencySymbol = ""
-            numberFormatter.maximumFractionDigits = 2
-            if let formattedLow = numberFormatter.string(from: NSNumber(value: low)) {
+            if let formattedLow = NumberFormatter.currencyFormatter.string(from: NSNumber(value: low)) {
                 let attributedString = NSMutableAttributedString(string: "Low: ", attributes: [
                         .foregroundColor: UIColor(hex: "#0C235E")
                     ])
                     attributedString.append(NSAttributedString(string: formattedLow, attributes: [
                         .foregroundColor: UIColor.systemRed
                     ]))
-                labelConfigurater(label: coinLowLabel,
-                                  color: .systemRed,
-                                  fontSize: 17,
-                                  fontWeight: .medium,
-                                  textAlignment: .right,
-                                  text: "")
+                labelConfigurater(label: coinLowLabel, color: .systemRed, fontSize: 17, fontWeight: .medium, textAlignment: .right, text: "")
                 coinLowLabel.attributedText = attributedString
             }
         }
-        
-        
     }
     
     private func setStackViews() {
-        priceStackView.addArrangedSubview(coinPriceLabel)
-        priceStackView.addArrangedSubview(coinChangeLabel)
-        priceStackView.axis = .vertical
-        priceStackView.alignment = .leading
-        priceStackView.spacing = 8
-        
-        highLowStackView.addArrangedSubview(coinHighLabel)
-        highLowStackView.addArrangedSubview(coinLowLabel)
-        highLowStackView.axis = .vertical
-        highLowStackView.alignment = .trailing
-        highLowStackView.spacing = 8
-        
-        infoStackView.addArrangedSubview(priceStackView)
-        infoStackView.addArrangedSubview(highLowStackView)
-        infoStackView.axis = .horizontal
-        highLowStackView.alignment = .trailing
-        highLowStackView.spacing = 4
+        configureStack(stack: priceStackView, axis: .vertical, spacing: 8, views: [coinPriceLabel,coinChangeLabel], alignment: .leading)
+        configureStack(stack: highLowStackView, axis: .vertical, spacing: 8, views: [coinHighLabel,coinLowLabel], alignment: .trailing)
+        configureStack(stack: infoStackView, axis: .horizontal, spacing: 4, views: [priceStackView,highLowStackView], alignment: .trailing)
     }
-    
 }

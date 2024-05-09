@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: - Enum of Rank System
 enum SortingCriteria {
     case rank
     case price
@@ -16,9 +17,9 @@ enum SortingCriteria {
     case marketCap
 }
 
+//MARK: - Protocols
 protocol HomeViewModelProtocol {
     var view: HomeScreenViewProtocol? { get set }
-    
     func viewDidLoad()
     func getCoins()
     func viewWillAppear()
@@ -28,16 +29,17 @@ protocol HomeViewModelProtocol {
 }
 
 final class HomeViewModel {
+    //MARK: - Variables
     weak var view: HomeScreenViewProtocol?
     private let service = CoinService()
     var coins = [Coins]()
     var sortingCriteria: SortingCriteria = .rank
 }
 
-
-
+//MARK: - Extension
 extension HomeViewModel: HomeViewModelProtocol {
     
+    //MARK: - LifeCycles
     func viewDidLoad() {
         getCoins()
     }
@@ -48,6 +50,7 @@ extension HomeViewModel: HomeViewModelProtocol {
         view?.configureCollectionView()
     }
     
+    //MARK: - fetch Data
     func getCoins() {
         service.downloadCoins() { [weak self] returnedCoins in
             guard let self = self else { return }
@@ -59,6 +62,7 @@ extension HomeViewModel: HomeViewModelProtocol {
         }
     }
     
+    //MARK: - Logic of Sorting
     func cycleSortingCriteria() {
         switch sortingCriteria {
         case .rank:

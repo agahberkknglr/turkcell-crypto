@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: - Protocols
 protocol HomeScreenViewProtocol: AnyObject {
     func configureHomeVC()
     func configureHomeTitle()
@@ -17,16 +18,16 @@ protocol HomeScreenViewProtocol: AnyObject {
 
 final class HomeScreenView: UIViewController {
     
+    //MARK: - Variables
     private let viewModel = HomeViewModel()
-    
     private var collectionView: UICollectionView!
     private var stackView = UIStackView()
     private var homeTitleLabel = UILabel()
     private var homeSortButton = UIButton()
 
+    //MARK: - LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         viewModel.view = self
         viewModel.viewDidLoad()
     }
@@ -37,18 +38,19 @@ final class HomeScreenView: UIViewController {
     }
 }
 
+//MARK: - Extensions
 extension HomeScreenView: HomeScreenViewProtocol {
     
+    //MARK: - Configuration
     func configureHomeVC() {
         navigationController?.isNavigationBarHidden = true
         view.backgroundColor = UIColor(hex: "#F9F9F9")
     }
     
+    //MARK: - Configuration Title
     func configureHomeTitle() {
-        
         setTitleLabel()
         setSortButton()
-        
         stackView.addArrangedSubview(homeTitleLabel)
         stackView.addArrangedSubview(homeSortButton)
         stackView.axis = .horizontal
@@ -112,7 +114,7 @@ extension HomeScreenView: HomeScreenViewProtocol {
         }
     }
     
-    
+    //MARK: - Configuration of Collection View
     func configureCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout:  createFlowLayout())
         collectionView.delegate = self
@@ -152,6 +154,7 @@ extension HomeScreenView: HomeScreenViewProtocol {
     }
 }
 
+//MARK: - Extension of CollectionView
 extension HomeScreenView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.coins.count
