@@ -26,4 +26,4 @@ User can be able to sort differently by their choice and be able look for the de
 
 ## Demo
 
-![cryptodemo](https://github.com/agahberkknglr/turkcell-crypto/assets/79965739/508ea05c-becd-4ce9-87af-ed7d80967150)
+![cryptodemo2](https://github.com/agahberkknglr/turkcell-crypto/assets/79965739/8ac2bd57-ad90-4bfb-a41b-12ac4399bdd8)
