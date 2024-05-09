@@ -168,7 +168,6 @@ extension HomeViewModel: HomeViewModelProtocol {
                     return market1 > market2
                 }
             }
-
         }
     }
 }

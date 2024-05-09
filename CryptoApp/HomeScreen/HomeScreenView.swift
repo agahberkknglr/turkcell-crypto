@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HomeScreenView.swift
 //  CryptoApp
 //
 //  Created by Agah Berkin Güler on 4.05.2024.
@@ -61,7 +61,6 @@ extension HomeScreenView: HomeScreenViewProtocol {
             homeSortButton.leadingAnchor.constraint(equalTo: homeTitleLabel.trailingAnchor, constant: 16),
             homeSortButton.centerYAnchor.constraint(equalTo: homeTitleLabel.centerYAnchor),
             homeSortButton.widthAnchor.constraint(equalToConstant: 130)
-            
         ])
     }
     
@@ -161,7 +160,6 @@ extension HomeScreenView: HomeScreenViewProtocol {
         collectionView.showsVerticalScrollIndicator = false
         view.addSubview(collectionView)
         collectionView.backgroundColor = UIColor(hex: "#F9F9F9")
-        
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

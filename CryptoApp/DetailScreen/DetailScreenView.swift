@@ -70,16 +70,12 @@ extension DetailScreenView: DetailScreenViewProtocol {
         let coinSymbolLabel = UILabel()
         let coinNameLabel = UILabel()
         let stackView = UIStackView(arrangedSubviews: [coinSymbolLabel,coinNameLabel])
-        
         labelConfigurater(label: coinSymbolLabel, color: UIColor(hex: "#79808E"), fontSize: 14, fontWeight: .medium, textAlignment: .center, text: viewModel.coin?.symbol)
         labelConfigurater(label: coinNameLabel, color: UIColor(hex: "#0C235E"), fontSize: 20, fontWeight: .semibold, textAlignment: .center, text: viewModel.coin?.name)
-        
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 4
-        
         containerView.addSubview(stackView)
-        
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
@@ -105,7 +101,6 @@ extension DetailScreenView: DetailScreenViewProtocol {
         view.addSubview(imageStackView)
         view.addSubview(coinTitleLabel)
         view.addSubview(infoStackView)
-        
         imageStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             imageStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 32),
@@ -113,7 +108,6 @@ extension DetailScreenView: DetailScreenViewProtocol {
             imageStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             imageStackView.bottomAnchor.constraint(equalTo: coinTitleLabel.topAnchor, constant: -8)
         ])
-        
         coinTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             coinTitleLabel.topAnchor.constraint(equalTo: imageStackView.bottomAnchor, constant: 32),
@@ -121,14 +115,12 @@ extension DetailScreenView: DetailScreenViewProtocol {
             coinTitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             coinTitleLabel.bottomAnchor.constraint(equalTo: infoStackView.topAnchor, constant: -8)
         ])
-        
         infoStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             infoStackView.topAnchor.constraint(equalTo: coinTitleLabel.bottomAnchor, constant: 8),
             infoStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             infoStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
-
     }
     
     private func setLabels() {

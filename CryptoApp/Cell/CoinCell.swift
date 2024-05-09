@@ -97,7 +97,6 @@ final class CoinCell: UICollectionViewCell {
     private func setViewConstraints() {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.pin(view: contentView)
-        
     }
     
     private func setImageConstraints() {
@@ -134,6 +133,5 @@ final class CoinCell: UICollectionViewCell {
             priceStackView.trailingAnchor.constraint(equalTo: cellStackView.trailingAnchor,constant: -16),
             priceStackView.bottomAnchor.constraint(equalTo: cellStackView.bottomAnchor, constant: -8)
         ])
-        
     }
 }

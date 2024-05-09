@@ -20,7 +20,6 @@ class NetworkManager {
                 completion(.failure(error))
                 return
             }
-            
             guard
                 let response = response as? HTTPURLResponse,
                 response.statusCode == 200 else {
@@ -28,13 +27,10 @@ class NetworkManager {
                 completion(.failure(URLError(.badServerResponse)))
                 return
             }
-            
             guard let data = data else {
-                
                 completion(.failure(URLError(.badURL)))
                 return
             }
-            
             completion(.success(data))
         }
         dataTask.resume()
