@@ -25,4 +25,5 @@ User can be able to sort differently by their choice and be able look for the de
 | Listing the Crypto Currencies | Details for the selected Currencies | Sorted for the Price |
 
 ##Demo
+
 ![cryptodemo](https://github.com/agahberkknglr/turkcell-crypto/assets/79965739/508ea05c-becd-4ce9-87af-ed7d80967150)
