@@ -6,9 +6,7 @@
 <h3> - This application shows the currency list and currency detail page. User can apply some sort filter like: rank, price, marketCap, 24h Volume, change and listedAt. In detail page, crypto currency name, symbol, rank, image changeRate, high and low values shown to user. </h3>
 </div>
 
-
 ## Features
-
 User can be able to sort differently by their choice and be able look for the details for the selected crypto currency.
 
 ## Tech Stack
@@ -21,6 +19,6 @@ User can be able to sort differently by their choice and be able look for the de
 - MVVM architecture
 
  ## Screenshots
-!(https://github.com/agahberkknglr/turkcell-crypto/assets/79965739/5d288afb-44f6-438f-af9a-ee58fbb3b493)
-!(https://github.com/agahberkknglr/turkcell-crypto/assets/79965739/654fa4a5-6b69-4e6e-ad33-276404d9a47f)
-!(https://github.com/agahberkknglr/turkcell-crypto/assets/79965739/ab734fb7-f8c7-4d9b-a2e5-d14bfdc3d353)
+![Screenshot 2024-05-10 at 01 20 34](https://github.com/agahberkknglr/turkcell-crypto/assets/79965739/7d352c53-7071-4195-99a0-97189532bbf2)
+![Screenshot 2024-05-10 at 01 20 46](https://github.com/agahberkknglr/turkcell-crypto/assets/79965739/10cb5d57-43e9-4bb7-bc70-bedabcffff50)
+![Screenshot 2024-05-10 at 01 21 49](https://github.com/agahberkknglr/turkcell-crypto/assets/79965739/d756c7c0-9e0c-40e1-a241-80a84f5901fe)
