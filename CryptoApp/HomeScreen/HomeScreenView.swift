@@ -51,16 +51,11 @@ extension HomeScreenView: HomeScreenViewProtocol {
     func configureHomeTitle() {
         setTitleLabel()
         setSortButton()
-        stackView.addArrangedSubview(homeTitleLabel)
-        stackView.addArrangedSubview(homeSortButton)
-        stackView.axis = .horizontal
-        stackView.spacing = 8
-        stackView.distribution = .fillProportionally
+        configureStack(stack: stackView, axis: .horizontal, spacing: 8, views: [homeTitleLabel,homeSortButton], distribution: .fillProportionally)
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
         view.addSubview(stackView)
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             homeSortButton.leadingAnchor.constraint(equalTo: homeTitleLabel.trailingAnchor, constant: 16),
@@ -168,7 +163,7 @@ extension HomeScreenView: HomeScreenViewProtocol {
         collectionView.backgroundColor = UIColor(hex: "#F9F9F9")
         
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 8),
+            collectionView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)

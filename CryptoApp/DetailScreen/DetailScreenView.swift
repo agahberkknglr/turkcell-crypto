@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 //MARK: - Protocol
 protocol DetailScreenViewProtocol: AnyObject {
@@ -36,15 +37,16 @@ final class DetailScreenView: UIViewController {
     private let priceStackView = UIStackView()
     private let highLowStackView = UIStackView()
     private let infoStackView = UIStackView()
+    private let imageStackView = UIStackView()
+    private let coinImage = UIImageView()
+    private let coinRankLabel = UILabel()
     
     //MARK: - LifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
-
         viewModel.view = self
         viewModel.viewDidLoad()
     }
-
 }
 
 //MARK: - Extensions
@@ -99,12 +101,22 @@ extension DetailScreenView: DetailScreenViewProtocol {
     private func setupUI() {
         setLabels()
         setStackViews()
+        setImage()
+        view.addSubview(imageStackView)
         view.addSubview(coinTitleLabel)
         view.addSubview(infoStackView)
         
+        imageStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 32),
+            imageStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            imageStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            imageStackView.bottomAnchor.constraint(equalTo: coinTitleLabel.topAnchor, constant: -8)
+        ])
+        
         coinTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            coinTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            coinTitleLabel.topAnchor.constraint(equalTo: imageStackView.bottomAnchor, constant: 32),
             coinTitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             coinTitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             coinTitleLabel.bottomAnchor.constraint(equalTo: infoStackView.topAnchor, constant: -8)
@@ -160,11 +172,35 @@ extension DetailScreenView: DetailScreenViewProtocol {
                 coinLowLabel.attributedText = attributedString
             }
         }
+        labelConfigurater(label: coinRankLabel, color: UIColor(hex: "#0C235E"), fontSize: 22, fontWeight: .semibold, textAlignment: .center,text: "Rank: \(viewModel.coin?.rank ?? 0)")
+    }
+    
+    private func setImage() {
+        coinImage.layer.cornerRadius = 8
+        coinImage.clipsToBounds = true
+        if let iconUrl = viewModel.coin?.iconUrl {
+            var modifiedUrl = iconUrl
+            if iconUrl.hasSuffix(".svg") {
+                modifiedUrl = iconUrl.replacingOccurrences(of: ".svg", with: ".png")
+            }
+            if let url = URL(string: modifiedUrl) {
+                coinImage.sd_setImage(with: url)
+            }
+        }
+        coinImage.contentMode = .scaleAspectFit
+        coinImage.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            coinImage.topAnchor.constraint(equalTo: imageStackView.topAnchor, constant: 8),
+            coinImage.leadingAnchor.constraint(equalTo: imageStackView.leadingAnchor, constant: 8),
+            coinImage.trailingAnchor.constraint(equalTo: imageStackView.trailingAnchor, constant: -8),
+            coinImage.heightAnchor.constraint(equalToConstant: 200)
+        ])
     }
     
     private func setStackViews() {
         configureStack(stack: priceStackView, axis: .vertical, spacing: 8, views: [coinPriceLabel,coinChangeLabel], alignment: .leading)
         configureStack(stack: highLowStackView, axis: .vertical, spacing: 8, views: [coinHighLabel,coinLowLabel], alignment: .trailing)
         configureStack(stack: infoStackView, axis: .horizontal, spacing: 4, views: [priceStackView,highLowStackView], alignment: .trailing)
+        configureStack(stack: imageStackView, axis: .vertical, spacing: 16, views: [coinImage, coinRankLabel], alignment: .center)
     }
 }

@@ -23,7 +23,7 @@ final class DetailViewModel {
 extension DetailViewModel: DetailViewModelProtocol {
     //MARK: LifeCycles
     func viewDidLoad() {
-        view?.configureDetailVC()
         view?.setupNavigationBar()
+        view?.configureDetailVC()
     }
 }
